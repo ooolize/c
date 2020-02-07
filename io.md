@@ -39,3 +39,77 @@ int main(){
 	system("pause");
 }
 ```
+
+### gets,fgets
++ gets
+> + gets(c)函数接受一个字符数组，并从键盘读取一行。
+> + 遇到\n忽略并将之前的字符加上\0放入缓冲区。
+> + 如果遇到文件结束符返回NULL(0)
+> + 可能发生访问越界的问题(覆盖其他数据)
+
+#### 测试gets
++ gets
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define size 5
+
+
+int main(){
+	int a = 0;
+	char b[size];
+	while (gets(b) != NULL){
+		puts(b);
+		putchar('\n');
+	}
+	printf("%d", a);
+	system("pause");
+}
+
+输入:aaaaa\n
+输出:aaaaa
+输入:aaaaaaaaaaaaaaaaaaaaaaaaa\n
+输出:aaaaaaaaaaaaaaaaaaaaaaaaa
+输入:ctrl+z
+此时a的值会发生改变，因为访问越界.在vs2013中值为0xcccccccc
+```
+
+
++ fgets(c,sizeof(c),stdin)
+> + 接受一个字符数组，一个表示最多读入sizeof(c)-1，一个标准输入
+> + 这个函数是安全的，一旦输入超过给定范围，后面的输入就会在缓冲区而不读入，如果少于给定范围，那就补充0
+> + 它会把\n读取到c中，我们需要将c[sizeof[c]-1]=0将他抹掉。
+#### 测试fgets
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define size 5
+
+
+int main(){
+	int a = 0;
+	printf("a=%d\n", a);
+	char b[size];
+	while (fgets(b,sizeof(b),stdin) != NULL){
+		
+		puts(b);	
+		//putchar('\n');
+	}
+	printf("a=%d", a);
+	system("pause");
+}
+输入:aa\n
+输出:\n\naa(一个是缓冲区中的\n，另一个是puts的\n)
+输入:aaaaaaaaaaaa\n(12个a)
+输出:aaaa
+占位 aaaa
+占位 aaaa\n\n    
+```
+
+## str系列, strn系列函数
