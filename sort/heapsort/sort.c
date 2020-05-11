@@ -1,5 +1,5 @@
 #include"sort.h"
-
+/*
 void quicksort(int* a, int left, int right){
 	int pivot;
 	//right--;
@@ -9,13 +9,15 @@ void quicksort(int* a, int left, int right){
 		quicksort(a, pivot + 1, right);
 	}
 }
-
+*/
 void heapsort(int *a, int left, int right){//right应该是元素长度
 	int N = right / 2 - 1;
+	//创建最大堆
 	for (int i = N - 1; i>=0; i--){
 		audjustHeapSort(a, i, right);
 	}
 	SWAP(a[0], a[right-1]);
+	//获得左右子树的最大值并将它放到最后面
 	for (int i = right - 2; i > 0; i--){
 		audjustHeapSort(a, 0, i);
 		SWAP(a[0],a[i]);
