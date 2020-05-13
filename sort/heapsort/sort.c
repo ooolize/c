@@ -27,9 +27,7 @@ void heapsort(int *a, int left, int right){
     for (int i = right - 1; i > 0; i--){
         audjustHeapSort(a, 0, i);
         SWAP(a[0],a[i-1]);
-
     }
-
 }
 
 void print(int *a,int n){
