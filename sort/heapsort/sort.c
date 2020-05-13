@@ -17,7 +17,7 @@ void audjustHeapSort(int*a, int pos, int len){
         else{break;}
     }
 }
-void heapsort(int *a, int left, int right){
+void heapsort(int *a, int left, int right){//right是大小
     //从底到顶成堆
     for (int i = right/2 ; i>=0; i--){
         audjustHeapSort(a, i, right);
