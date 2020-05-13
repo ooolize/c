@@ -1,38 +1,40 @@
 #include"sort.h"
-/*
-void quicksort(int* a, int left, int right){
-	int pivot;
-	//right--;
-	if (left < right){
-		pivot = partition(a, left, right);
-		quicksort(a, left, pivot - 1);
-		quicksort(a, pivot + 1, right);
-	}
-}
-*/
-void heapsort(int *a, int left, int right){//right应该是元素长度
-	int N = right / 2 - 1;
-	//创建最大堆
-	for (int i = N - 1; i>=0; i--){
-		audjustHeapSort(a, i, right);
-	}
-	SWAP(a[0], a[right-1]);
-	//获得左右子树的最大值并将它放到最后面
-	for (int i = right - 2; i > 0; i--){
-		audjustHeapSort(a, 0, i);
-		SWAP(a[0],a[i]);
-	}
+#include <iostream>
+using std::endl;
+using std::cout;
 
-}
-
-//函数的语义是从将pos位置的值变为它左右子树的最大值，并将交换下去的数保留最大堆的性质。
+//更新pos位置的值为其左右节点的最大，并把交换下去的数维持最大堆的性质
 void audjustHeapSort(int*a, int pos, int len){
-	int dad = pos;
-	int son = dad * 2 + 1;
-	if (son + 1 < len&&a[son] < a[son + 1]) son++;
-	while (son<len&&dad<len&&a[son]>a[dad]){
-		SWAP(a[son], a[dad]);
-		dad = son;
-		son = son * 2 + 1;
-	}
+    int dad = pos;
+    int son = dad * 2 + 1;
+    while (son<len){
+        if (son + 1 < len&&a[son] < a[son + 1]) son++;
+        if(a[son]>a[dad]){
+            SWAP(a[son], a[dad]);
+            dad = son;
+            son = son * 2 + 1;
+        }
+        else{break;}
+    }
+}
+void heapsort(int *a, int left, int right){
+    //从底到顶成堆
+    for (int i = right/2 ; i>=0; i--){
+        audjustHeapSort(a, i, right);
+    }
+    SWAP(a[0], a[right-1]);
+    //每次从顶拿到最大值后与末尾的交换，这样从i以后的都是有序增大的。
+    for (int i = right - 1; i > 0; i--){
+        audjustHeapSort(a, 0, i);
+        SWAP(a[0],a[i-1]);
+
+    }
+
+}
+
+void print(int *a,int n){
+    for(int i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+    cout<<endl;
 }
